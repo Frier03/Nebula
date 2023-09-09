@@ -1,0 +1,23 @@
+{
+  "name": "nebula",
+  "version": "1.0.0",
+  "description": "A Minecraft Client",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frier03/Nebula.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frier03/Nebula/issues"
+  },
+  "homepage": "https://github.com/Frier03/Nebula#readme",
+  "dependencies": {
+    "mineflayer": "^4.14.0"
+  }
+}
