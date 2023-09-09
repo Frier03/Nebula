@@ -1,15 +1,30 @@
-const Bot = require('./Bot');
+const { Worker } = require('worker_threads');
 
 class Client {
     constructor() {
-        this.bots = [];
+        this.bots = {};
     };
 
-    createBot(email, password, host, auth) {
-        const bot = new Bot(email, password, host, auth);
-        this.bots.push(bot);
+    createBot() {
+        const bot = new Worker('./Bot.js', {
+            workerData: {
+                username: 'bot_email',
+                password: 'bot_password',
+                serverIp: 'server_ip',
+                authenticationMethod: 'authentication_method'
+            },
+        });
 
-        return bot;
+        this.bots['bot_email'] = {
+            threadId: bot.threadId,
+            authenticationMethod: 'authentication_method',
+            threadObject: bot,
+        };
+
+        // Handle messages received from worker threads (if needed)
+        bot.on('message', (message, threadId) => {
+            console.log('Message from worker:', message);
+        });
     };
 }
 

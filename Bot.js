@@ -1,8 +1,4 @@
-const mineflayer = require('mineflayer')
+const { parentPort, workerData, threadId } = require('worker_threads');
 
-class Bot {
-    constructor(email, password, host, auth) {
-    };
-}
-
-module.exports = Bot;
+console.log(threadId);
+parentPort.postMessage({ workerData });
