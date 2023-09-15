@@ -1,18 +1,24 @@
+const mineflayer = require('mineflayer');
+
 class Bot {
     constructor(credentials) {
-
         this.email = credentials.email;
         this.password = credentials.password;
-        this.authenticationMethod = credentials.authenticationMethod;
-        this.serverIp = null;
+        this.authenticationMethod = credentials.authenticationMethod || 'offline';;
 
-        this.username = null;
+        this.instance = null;
         this.isConnectedToServer = false;
     };
 
 
-    connect() {
+    connect(serverIp = 'localhost') {
+        const instance = mineflayer.createBot({
+            host: serverIp,
+            username: this.email,
+            auth: this.authenticationMethod
+        });
 
+        this.instance = instance;
     };
 }
 
