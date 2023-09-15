@@ -8,4 +8,4 @@ const botCredentials = {
   };
 
 client.createBot(botCredentials);
-console.log(client.findBotByEmail('sh1tters'))
+console.log(client.findBot('sh1tters'))

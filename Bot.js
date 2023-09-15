@@ -6,10 +6,10 @@ class Bot {
         this.password = credentials.password;
         this.authenticationMethod = credentials.authenticationMethod || 'offline';;
 
-        this.instance = null;
+        this.instance = null; // inheritance to mineflayer object
         this.isConnectedToServer = false;
+        this.username = null;
     };
-
 
     connect(serverIp = 'localhost') {
         const instance = mineflayer.createBot({

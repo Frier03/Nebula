@@ -11,9 +11,9 @@ class Client {
         this.bots.push(bot);
     };
 
-    findBotByEmail(target) {
+    findBot(target) {
         for (const bot of this.bots) {
-            if (bot.email === target) {
+            if (bot.email === target || bot.username === target) {
                 return bot; // Return the bot if found
             }
         }
