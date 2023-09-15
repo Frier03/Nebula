@@ -1,4 +1,19 @@
-const { parentPort, workerData, threadId } = require('worker_threads');
+class Bot {
+    constructor(credentials) {
 
-console.log(threadId);
-parentPort.postMessage({ workerData });
+        this.email = credentials.email;
+        this.password = credentials.password;
+        this.authenticationMethod = credentials.authenticationMethod;
+        this.serverIp = null;
+
+        this.username = null;
+        this.isConnectedToServer = false;
+    };
+
+
+    connect() {
+
+    };
+}
+
+module.exports = Bot;
