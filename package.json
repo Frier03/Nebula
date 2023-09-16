@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Frier03/Nebula#readme",
   "dependencies": {
-    "mineflayer": "^4.14.0"
+    "dotenv": "^16.3.1",
+    "mineflayer": "^4.14.0",
+    "socks5-client": "^1.2.8"
   }
 }

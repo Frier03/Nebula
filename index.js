@@ -1,5 +1,4 @@
 const Client = require('./Client');
-
 const client = new Client();
 
 const bot1Credentials = {
@@ -18,3 +17,4 @@ client.createBot(bot2Credentials);
 
 const bot = client.findBot('bot1@example.com');
 bot.connect();
+bot.chat('Hello World')
