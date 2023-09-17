@@ -1,5 +1,5 @@
-const Client = require('./Client');
-const client = new Client();
+const Nebula = require('./Nebula');
+const nebula = new Nebula();
 
 const bot1Credentials = {
   email: "bot1@example.com",
@@ -11,11 +11,11 @@ const bot2Credentials = {
   password: "secretpassword"
 };
 
-client.createBot(bot1Credentials);
-client.createBot(bot2Credentials);
+nebula.createBot(bot1Credentials);
+nebula.createBot(bot2Credentials);
 
 
-client.getAllBotsData()
+nebula.getAllBotsData()
   .then((botData) => {
-    //console.log(botData);
+    console.log(botData);
   });

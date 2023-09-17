@@ -1,7 +1,7 @@
 const { Worker, isMainThread, parentPort } = require('worker_threads');
 const { nanoid } = require('nanoid');
 
-class Client {
+class Nebula {
     constructor() {
         this.workers = [];
     };
@@ -42,4 +42,4 @@ class Client {
 
 };
 
-module.exports = Client;
+module.exports = Nebula;
