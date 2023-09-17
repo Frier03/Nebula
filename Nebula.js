@@ -1,5 +1,8 @@
 const { Worker, isMainThread, parentPort } = require('worker_threads');
 const { nanoid } = require('nanoid');
+const loadConfig = require('./preloader');
+const config = loadConfig();
+
 
 class Nebula {
     constructor() {
@@ -7,10 +10,9 @@ class Nebula {
     };
 
     createBot(credentials) {
-        var id = nanoid(5);
-        credentials.id = id;
+        credentials.id = nanoid(config.nanoid_length);
         const worker = new Worker('./botWorker.js', { workerData: credentials });
-        this.workers[id] = worker;
+        this.workers[credentials.id] = worker;
     };
 
     connectBotToServer(workerIndex, serverIp) {
