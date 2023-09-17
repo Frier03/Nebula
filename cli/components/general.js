@@ -6,7 +6,12 @@ const general = async (backFunction) => {
         type: 'list',
         name: 'action',
         message: 'Nebula Client | General',
-        choices: ['In development', 'Back']
+        choices: [
+            'In development',
+
+            new inquirer.Separator(), // Add a separator line
+            'Back'
+        ]
     });
 
     switch (action) {

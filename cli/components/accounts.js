@@ -6,7 +6,12 @@ const accounts = async (backFunction) => {
         type: 'list',
         name: 'action',
         message: 'Nebula Client | Accounts',
-        choices: ['In development', 'Back']
+        choices: [
+            'Add Account',
+
+            new inquirer.Separator(), // Add a separator line
+            'Back'
+        ]
     });
 
     switch (action) {

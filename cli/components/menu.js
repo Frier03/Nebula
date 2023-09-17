@@ -14,7 +14,13 @@ const menu = async () => {
         type: 'list',
         name: 'action',
         message: 'Nebula Client | Menu',
-        choices: ['General', 'Accounts', 'Botting', 'Settings', 'About']
+        choices: [
+            'General',
+            'Accounts',
+            'Botting',
+            'Settings',
+            'About'
+        ]
     });
 
     switch (action) {
