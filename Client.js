@@ -1,24 +1,46 @@
-const Bot = require('./Bot');
+const { Worker, isMainThread, parentPort } = require('worker_threads');
+const { nanoid } = require('nanoid');
 
 class Client {
     constructor() {
-        this.bots = [];
+        this.workers = [];
     };
 
     createBot(credentials) {
-        const bot = new Bot(credentials);
-
-        this.bots.push(bot);
+        if (!isMainThread) return;
+        var id = nanoid(5);
+        credentials.id = id;
+        const worker = new Worker('./botWorker.js', { workerData: credentials });
+        this.workers[id] = worker;
     };
 
-    findBot(target) {
-        for (const bot of this.bots) {
-            if (bot.email === target || bot.username === target) {
-                return bot; // Return the bot if found
-            }
-        }
-        throw new Error(`No bot associated with ${target}!`); // Throw an error if not found
+    connectBotToServer(workerIndex, serverIp) {
+        this.workers[workerIndex].postMessage({ action: 'connect', desc: serverIp });
+    };
+
+    async getAllBots() {
+        const botData = [];
+        const workerIds = Object.keys(this.workers);
+
+        const dataPromises = workerIds.map((workerId) => {
+            //console.log(`Requesting information for ${workerId}`);
+            return new Promise((resolve) => {
+                this.workers[workerId].postMessage({ action: 'info' });
+                this.workers[workerId].once('message', (message) => {
+                    if (message.action === 'infoConfirmation') {
+                        botData.push(message.desc);
+                        resolve();
+                    }
+                });
+            });
+        });
+
+        // Wait for all Promises to resolve before returning botData
+        await Promise.all(dataPromises);
+
+        return botData;
     }
-}
+
+};
 
 module.exports = Client;

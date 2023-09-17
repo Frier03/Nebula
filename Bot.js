@@ -4,6 +4,7 @@ var Socks = require('socks5-client');
 
 class Bot {
     constructor(credentials) {
+        this.id = credentials.id || '-1';
         this.email = credentials.email;
         this.password = credentials.password || '';
         this.authenticationMethod = credentials.authenticationMethod || 'offline';;
@@ -14,6 +15,7 @@ class Bot {
     };
 
     connect(serverIp = 'localhost') {
+        console.log("I am going to connect to ", serverIp)
         const instance = mineflayer.createBot({
             username: this.email,
             password: this.password,
@@ -46,7 +48,15 @@ class Bot {
         this.instance.chat(message);
     };
 
-
+    getAllVariables() {
+        return {
+            id: this.id,
+            email: this.email,
+            authenticationMethod: this.authenticationMethod,
+            isConnectedToServer: this.isConnectedToServer,
+            username: this.username,
+        };
+    };
 }
 
 module.exports = Bot;

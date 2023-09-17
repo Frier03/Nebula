@@ -14,7 +14,11 @@ const bot2Credentials = {
 client.createBot(bot1Credentials);
 client.createBot(bot2Credentials);
 
+client.getAllBots()
+  .then((botData) => {
+    console.log('Bot Data:', botData);
+  });
 
-const bot = client.findBot('bot1@example.com');
-bot.connect();
-bot.chat('Hello World')
+//const bot = client.findBot('bot1@example.com');
+//bot.connect();
+//bot.chat('Hello World')
