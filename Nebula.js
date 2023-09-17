@@ -15,10 +15,6 @@ class Nebula {
         this.workers[credentials.id] = worker;
     };
 
-    connectBotToServer(workerIndex, serverIp) {
-        this.workers[workerIndex].postMessage({ action: 'connect', desc: serverIp });
-    };
-
     async getAllBotsData() {
         const botData = [];
         const workerIds = Object.keys(this.workers);

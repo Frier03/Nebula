@@ -2,9 +2,9 @@
   "name": "nebula",
   "version": "1.0.0",
   "description": "A Minecraft Client",
-  "main": "index.js",
+  "main": "cli/index.js",
   "scripts": {
-    "run": "node index.js",
+    "run": "node cli/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/Frier03/Nebula#readme",
   "dependencies": {
+    "child_process": "^1.0.2",
+    "commander": "^11.0.0",
     "dotenv": "^16.3.1",
+    "inquirer": "^8.2.6",
     "mineflayer": "^4.14.0",
     "nanoid": "^3.3.4",
     "properties-reader": "^2.3.0",
