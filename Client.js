@@ -7,7 +7,6 @@ class Client {
     };
 
     createBot(credentials) {
-        if (!isMainThread) return;
         var id = nanoid(5);
         credentials.id = id;
         const worker = new Worker('./botWorker.js', { workerData: credentials });
@@ -18,7 +17,7 @@ class Client {
         this.workers[workerIndex].postMessage({ action: 'connect', desc: serverIp });
     };
 
-    async getAllBots() {
+    async getAllBotsData() {
         const botData = [];
         const workerIds = Object.keys(this.workers);
 
@@ -39,7 +38,7 @@ class Client {
         await Promise.all(dataPromises);
 
         return botData;
-    }
+    };
 
 };
 
