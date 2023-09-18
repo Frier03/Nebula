@@ -9,11 +9,6 @@ program
   .description('Start the Nebula Minecraft client')
   .action(manager.start);
 
-program
-  .command('stop')
-  .description('Stop the Nebula Minecraft client')
-  .action(manager.stop);
-
 program.parse(process.argv);
 
 
