@@ -11,9 +11,9 @@ function getAccounts() {
         fs.createReadStream(config['account_configuration_name'])
             .pipe(csv())
             .on('data', (data) => {
-                const [username, password, auth] = Object.values(data)[0].split(':');
-                if (username && password && auth) {
-                    accounts.push({ username, password, auth });
+                const [mail, password, auth] = Object.values(data)[0].split(':');
+                if (mail && password && auth) {
+                    accounts.push({ mail, password, auth });
                 }
             })
             .on('end', () => {
