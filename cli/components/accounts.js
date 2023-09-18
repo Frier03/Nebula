@@ -1,7 +1,8 @@
-const inquirer = require('inquirer');
+const { nebula, config } = require('../../preload');
 const { showAccounts } = require('./show_accounts');
-const preload = require('../../preload');
-const { nebula } = preload;
+
+const inquirer = require('inquirer');
+
 
 const accounts = async (backFunction) => {
     console.clear();
@@ -12,7 +13,7 @@ const accounts = async (backFunction) => {
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
-        message: 'Nebula Client | Accounts',
+        message: `${config.header} | Accounts`,
         choices: [
             `Show Accounts(${accountsList.length})`,
             'Add Account',

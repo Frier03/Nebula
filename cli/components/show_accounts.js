@@ -1,7 +1,6 @@
-const inquirer = require('inquirer');
-const preload = require('../../preload');
-const { nebula } = preload;
+const { nebula, config } = require('../../preload');
 
+const inquirer = require('inquirer');
 
 const showAccounts = async (backFunction) => {
     console.clear();

@@ -1,3 +1,5 @@
+const { config } = require('../../preload');
+
 const inquirer = require('inquirer');
 
 const general = async (backFunction) => {
@@ -5,7 +7,7 @@ const general = async (backFunction) => {
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
-        message: 'Nebula Client | General',
+        message: `${config.header} | General`,
         choices: [
             'In development',
 

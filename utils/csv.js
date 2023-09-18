@@ -1,8 +1,8 @@
 const fs = require('fs');
 const csv = require('csv-parser');
+
 const loadConfig = require('../config');
 const config = loadConfig();
-
 
 function getAccounts() {
     return new Promise((resolve, reject) => {

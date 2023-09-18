@@ -3,7 +3,6 @@ const { nanoid } = require('nanoid');
 const loadConfig = require('./config');
 const config = loadConfig();
 
-
 class Nebula {
     constructor() {
         this.workers = [];
