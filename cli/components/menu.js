@@ -1,5 +1,5 @@
-const { showGeneral } = require('./general');
-const { showAccounts } = require('./accounts');
+const { showGeneralMenu } = require('./general');
+const { showAccountsMenu } = require('./accounts');
 
 const inquirer = require('inquirer');
 
@@ -25,10 +25,10 @@ const menu = async () => {
 
     switch (action) {
         case 'General':
-            showGeneral(goBack);
+            showGeneralMenu(goBack);
             break;
         case 'Accounts':
-            showAccounts(goBack);
+            showAccountsMenu(goBack);
             break;
     }
 };
