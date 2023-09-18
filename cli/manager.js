@@ -1,4 +1,4 @@
-const loadConfig = require('../preloader');
+const loadConfig = require('../config');
 const config = loadConfig();
 
 const cp = require('child_process');

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const loadConfig = require('../preloader');
+const loadConfig = require('../config');
 const config = loadConfig();
 
 
