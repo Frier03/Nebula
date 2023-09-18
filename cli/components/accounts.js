@@ -15,6 +15,8 @@ const accounts = async (backFunction) => {
         choices: [
             `Show Accounts(${accountsList.length})`,
             'Add Account',
+            'Add Bulk Accounts',
+            'Remove Account',
 
             new inquirer.Separator(), // Add a separator line
             'Back'
