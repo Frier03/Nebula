@@ -1,14 +1,20 @@
 const loadConfig = require('../config');
 const config = loadConfig();
 
+const loadPreload = require('../preload');
+
 const cp = require('child_process');
 const { showMenu } = require('./components/menu');
 
 let terminalProcess = null; // Store the reference to the terminal process
 
 module.exports = {
-    start: () => {
+    start: async () => {
         console.clear();
+
+        // Load preload.js
+        await loadPreload();
+
         if (config['open_in_new_terminal'] == 'false') {
             showMenu();
             return;
