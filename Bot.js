@@ -35,8 +35,6 @@ class Bot {
         // Await 'spawn' event emitter
         this.instance.once('spawn', () => {
             console.log(`${this.instance.username} has logged in to ${serverIp}!`);
-
-
         })
     };
 
