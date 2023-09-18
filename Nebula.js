@@ -1,6 +1,6 @@
 const { Worker, isMainThread, parentPort } = require('worker_threads');
 const { nanoid } = require('nanoid');
-const loadConfig = require('./preloader');
+const loadConfig = require('./config');
 const config = loadConfig();
 
 

@@ -22,5 +22,5 @@ const general = async (backFunction) => {
 };
 
 module.exports = {
-    showGeneral: general,
+    showGeneralMenu: general,
 };
