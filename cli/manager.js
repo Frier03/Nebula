@@ -1,5 +1,6 @@
 const loadConfig = require('../preloader');
 const config = loadConfig();
+
 const cp = require('child_process');
 const { showMenu } = require('./components/menu');
 
