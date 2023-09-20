@@ -9,11 +9,12 @@ class Bot {
         this.authenticationMethod = credentials.authenticationMethod || 'offline';;
 
         this.instance = null; // inheritance to mineflayer object
-        this.isConnectedToServer = false;
+        this.connected = false;
         this.username = null;
+        this.latency = 0;
     };
 
-    connect(serverIp = 'localhost') {
+    connect() {
         //TODO: Add mineflayer.createBot()
         return true;
     };
@@ -31,8 +32,10 @@ class Bot {
             id: this.id,
             email: this.email,
             authenticationMethod: this.authenticationMethod,
-            isConnectedToServer: this.isConnectedToServer,
+            connected: this.connected,
             username: this.username,
+            latency: this.latency,
+            instance: this.instance
         };
     };
 }

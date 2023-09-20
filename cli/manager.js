@@ -1,12 +1,7 @@
-const loadConfig = require('../config');
-const config = loadConfig();
-
+const { config } = require('../preload');
 const loadPreload = require('../preload');
 
-const cp = require('child_process');
 const { showMenu } = require('./components/menu');
-
-let terminalProcess = null; // Store the reference to the terminal process
 
 module.exports = {
     start: async () => {
@@ -20,16 +15,6 @@ module.exports = {
             return;
         }
 
-        switch (process.platform) {
-            case 'win32':
-                terminalProcess = cp.spawn('cmd', ['/C', 'start cmd.exe']);
-                return true;
-            case 'darwin':
-                terminalProcess = cp.spawn('open', ['-a', 'Terminal', process.env.HOME]);
-                return true;
-            default:
-                console.log('OS not supported!');
-        }
-    },
-    stop: () => { }
+        //TODO:
+    }
 };

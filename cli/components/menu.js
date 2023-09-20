@@ -1,7 +1,7 @@
 const { config } = require('../../preload');
 
-const { showGeneralMenu } = require('./general');
-const { showAccountsMenu } = require('./accounts');
+const { showGeneral } = require('./general');
+const { showAccounts } = require('./accounts');
 
 const inquirer = require('inquirer');
 
@@ -27,10 +27,10 @@ const menu = async () => {
 
     switch (action) {
         case 'General':
-            showGeneralMenu(goBack);
+            showGeneral(goBack);
             break;
         case 'Accounts':
-            showAccountsMenu(goBack);
+            showAccounts(goBack);
             break;
     }
 };

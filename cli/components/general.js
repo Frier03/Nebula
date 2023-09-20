@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 
 const general = async (backFunction) => {
     console.clear();
+
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
@@ -24,5 +25,5 @@ const general = async (backFunction) => {
 };
 
 module.exports = {
-    showGeneralMenu: general,
+    showGeneral: general,
 };
