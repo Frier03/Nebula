@@ -1,14 +1,13 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 
-const loadConfig = require('../config');
-const config = loadConfig();
+const { getConfig } = require('../configReader');
 
 function getAccounts() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const accounts = [];
 
-        fs.createReadStream(config['account_configuration_name'])
+        fs.createReadStream(getConfig('account_configuration_name'))
             .pipe(csv())
             .on('data', (data) => {
                 const [mail, password, auth] = Object.values(data)[0].split(':');

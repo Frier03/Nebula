@@ -1,15 +1,16 @@
 const { Worker, isMainThread, parentPort } = require('worker_threads');
 const { nanoid } = require('nanoid');
-const loadConfig = require('./config');
-const config = loadConfig();
+const { getConfig } = require('./configReader');
 
 class Nebula {
     constructor() {
         this.workers = [];
+        this.serverAddress = '';
+        this.serverHistory = [];
     };
 
     createBot(credentials) {
-        credentials.id = nanoid(config.nanoid_length);
+        credentials.id = nanoid(getConfig('nanoid_length'));
         const worker = new Worker('./botWorker.js', { workerData: credentials });
         this.workers[credentials.id] = worker;
     };

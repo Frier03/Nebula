@@ -15,7 +15,7 @@ const menu = async () => {
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
-        message: `${config.header} | Menu`,
+        message: `${config.getConfig('header')} | Menu`,
         choices: [
             'General',
             'Accounts',
