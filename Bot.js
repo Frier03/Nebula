@@ -1,6 +1,5 @@
 const mineflayer = require('mineflayer');
 
-
 class Bot {
     constructor(credentials) {
         this.id = credentials.id || '-1';
@@ -16,6 +15,8 @@ class Bot {
 
     connect() {
         //TODO: Add mineflayer.createBot()
+        //console.log('trying to connect', this.email);
+        this.connected = true;
         return true;
     };
 

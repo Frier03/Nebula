@@ -14,6 +14,7 @@ module.exports = {
     },
 
     connect: (bot) => {
-        return { action: 'connectReponse', success: true }; 
-    }
+        const success = bot.connect();
+        return { action: 'connectConfirmation', status: success ? "ok" : "Failed", username: bot.username };
+    },
 };

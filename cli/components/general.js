@@ -11,15 +11,16 @@ const general = async (backFunction) => {
         choices: [
             `Server Address (${nebula.serverAddress})`,
             `Connect Message (${config.getConfig('connect_message')})`,
+            `Start`,
             new inquirer.Separator(), // Add a separator line
             'Back',
-        ],
+        ]
     });
 
     switch (action) {
-        case 'Back':
-            backFunction();
-            return;
+        case 'Start':
+            await nebula.connectBots();
+            break;
 
         case `Server Address (${nebula.serverAddress})`:
             const { serverChoice } = await inquirer.prompt({
@@ -36,8 +37,12 @@ const general = async (backFunction) => {
             config.updateProperty('server_select', serverChoice);
 
             backFunction();
-            return;
-    }
+            break;
+
+        case 'Back':
+            backFunction();
+            break;
+    };
 };
 
 module.exports = {
