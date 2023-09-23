@@ -6,12 +6,13 @@ const Logger = require('./Logger');
 class Nebula {
     constructor() {
         this.workers = [];
+        this.workerIds = [];
         this.logger = new Logger();
 
         this.serverAddress = '';
         this.serverHistory = [];
 
-        this.workerIds = Object.keys(this.workers);
+        Worker.setMaxListeners(getConfig('worker_listeners'));
     };
 
     async connectBots() {
@@ -20,9 +21,13 @@ class Nebula {
         const throttlingDelay = getConfig('throttling_delay');
         const maxAccounts = getConfig('max_accounts');
 
-        const workerIds = Object.keys(this.workers);
+        for (let i = 0; i < this.workerIds.length; i++) {
+            if (i >= maxAccounts) return;
 
-        for (const workerId of workerIds) {
+            console.log(i)
+        }
+
+        for (const workerId of this.workerIds) {
             await new Promise((resolve) => {
                 this.workers[workerId].postMessage({ action: 'connect' });
                 this.workers[workerId].once('message', (message) => {
@@ -38,6 +43,7 @@ class Nebula {
     createBot(credentials) {
         credentials.id = nanoid(getConfig('nanoid_length'));
         const worker = new Worker('./botWorker.js', { workerData: credentials });
+
         this.workers[credentials.id] = worker;
     };
 
