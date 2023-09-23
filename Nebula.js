@@ -9,6 +9,8 @@ class Nebula {
         this.workerIds = [];
         this.logger = new Logger();
 
+        this.connectedBots = [];
+
         this.serverAddress = '';
         this.serverHistory = [];
 
@@ -21,24 +23,37 @@ class Nebula {
         const throttlingDelay = getConfig('throttling_delay');
         const maxAccounts = getConfig('max_accounts');
 
-        for (let i = 0; i < this.workerIds.length; i++) {
-            if (i >= maxAccounts) return;
+        // Create a function to wait for connectACK
+        const waitForConnectACK = (worker) => {
+            return new Promise((resolve) => {
+                worker.once('message', (message) => {
+                    if (message.action === 'connectACK') {
 
-            console.log(i)
-        }
-
-        for (const workerId of this.workerIds) {
-            await new Promise((resolve) => {
-                this.workers[workerId].postMessage({ action: 'connect' });
-                this.workers[workerId].once('message', (message) => {
-                    if (message.action === 'connectConfirmation') {
-                        console.log('Success!', message);
-                        resolve();
+                        this.connectedBots.push(message.username);
+                        resolve(); // Resolve the promise when connectACK is received
                     }
                 });
             });
-        }
-    }
+        };
+
+        for (let i = 0; i < this.workerIds.length; i++) {
+            if (i >= maxAccounts) return;
+
+            const worker = this.workers[this.workerIds[i]];
+
+            // Trigger worker to connect
+            worker.postMessage({ action: 'connect' });
+            console.log(`Trying to connect `, this.workerIds[i]);
+
+            // Wait for connectACK before moving to the next iteration
+            await waitForConnectACK(worker);
+
+            // delay if its not the last worker
+            if (i == this.workerIds.length - 1) break;
+            await new Promise((resolve) => setTimeout(resolve, throttlingDelay));
+        };
+    };
+
 
     createBot(credentials) {
         credentials.id = nanoid(getConfig('nanoid_length'));

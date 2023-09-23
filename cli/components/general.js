@@ -20,6 +20,8 @@ const general = async (backFunction) => {
     switch (action) {
         case 'Start':
             await nebula.connectBots();
+
+            backFunction();
             break;
 
         case `Server Address (${nebula.serverAddress})`:
