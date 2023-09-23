@@ -15,8 +15,9 @@ class Bot {
 
     connect() {
         //TODO: Add mineflayer.createBot()
-        //console.log('trying to connect', this.email);
+
         this.connected = true;
+        this.username = this.id;
         return true;
     };
 
