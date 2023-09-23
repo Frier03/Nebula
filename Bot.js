@@ -1,6 +1,4 @@
 const mineflayer = require('mineflayer');
-const { config } = require('./preload');
-
 
 class Bot {
     constructor(credentials) {
@@ -27,19 +25,42 @@ class Bot {
         });
 
         // Return a Promise that resolves when the bot successfully connects
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             bot.once('spawn', () => {
                 this.connected = true;
-                this.username = bot.username;
                 this.instance = bot;
+                this.username = this.instance.username;
 
-                console.log(`${this.username} has connected to ${host}`);
+                console.log(`${this.instance.username} has connected to ${host}`);
 
                 resolve(true);
             });
 
             bot.on('error', (err) => {
                 console.log(`${this.email} failed to connect, check logs for more information!`);
+                this.instance = null;
+
+                resolve(false);
+            });
+        });
+    };
+
+    async diconnect() {
+        this.instance.quit('disconnect attempt');
+
+        return new Promise((resolve) => {
+            this.instance.once('end', () => {
+                this.connected = false;
+                this.username = this.instance.username;
+
+                console.log(`${this.instance.username} has disconnected!`);
+                delete this.instance;
+
+                resolve(true);
+            });
+
+            this.instance.on('error', (err) => {
+                console.log(`${this.email} failed to disconnect, check logs for more information!`);
 
                 resolve(false);
             });
@@ -54,15 +75,14 @@ class Bot {
         this.instance.chat(message);
     };
 
-    getAllVariables() {
+    async getAllVariables() {
+
         return {
             id: this.id,
             email: this.email,
             authenticationMethod: this.authenticationMethod,
             connected: this.connected,
-            username: this.username,
-            latency: this.latency,
-            instance: this.instance
+            username: this.username
         };
     };
 }
