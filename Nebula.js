@@ -27,10 +27,9 @@ class Nebula {
         const waitForConnectACK = (worker) => {
             return new Promise((resolve) => {
                 worker.once('message', (message) => {
-                    if (message.action === 'connectACK') {
-
-                        this.connectedBots.push(message.username);
-                        resolve(); // Resolve the promise when connectACK is received
+                    if (message.action == 'connectACK') {
+                        if (message.status == "ok") this.connectedBots.push(message.username);
+                        resolve();
                     }
                 });
             });
@@ -43,7 +42,6 @@ class Nebula {
 
             // Trigger worker to connect
             worker.postMessage({ action: 'connect' });
-            console.log(`Trying to connect `, this.workerIds[i]);
 
             // Wait for connectACK before moving to the next iteration
             await waitForConnectACK(worker);
