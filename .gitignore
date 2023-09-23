@@ -129,4 +129,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-account_configurations.csv
+# csv files
+*.csv
