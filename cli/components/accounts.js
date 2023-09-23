@@ -1,38 +1,39 @@
-const inquirer = require('inquirer');
-const { showAccounts } = require('./show_accounts');
-const preload = require('../../preload');
-const { nebula } = preload;
+const { nebula, config } = require('../../preload');
 
-const accounts = async (backFunction) => {
+const inquirer = require('inquirer');
+
+const showAccounts = async (backFunction) => {
     console.clear();
 
-    // Get number of accounts configured
-    const accountsList = await nebula.getAllBotsData();
+    const accounts = await nebula.getAllBotsData();
+
+    const accountChoices = accounts.map(account => ({
+        name: `(${account.id}) ${account.email} | ${account.connected ? "Online" : "Offline"}`,
+        value: account,
+    }));
 
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
-        message: 'Nebula Client | Accounts',
+        message: `${config.getConfig('header')} | Accounts (${accounts.length})`,
         choices: [
-            `Show Accounts(${accountsList.length})`,
-            'Add Account',
-            'Remove Account',
-
+            ...accountChoices,
             new inquirer.Separator(), // Add a separator line
-            'Back'
-        ]
+            'Back (Menu)',
+        ],
     });
 
     switch (action) {
-        case `Show Accounts(${accountsList.length})`:
-            showAccounts(backFunction)
+        case 'Back (Menu)':
+            backFunction();
             break;
-        case 'Back':
+
+        default:
             backFunction();
             break;
     }
 };
 
 module.exports = {
-    showAccountsMenu: accounts,
+    showAccounts,
 };

@@ -13,7 +13,8 @@ module.exports = {
         return { action: 'infoConfirmation', desc: botInfo };
     },
 
-    connect: (bot) => {
-        return { action: 'connectReponse', success: true }; 
-    }
+    connect: async (bot) => {
+        const success = await bot.connect();
+        return { action: 'connectACK', status: success ? "ok" : "failed", username: bot.username };
+    },
 };

@@ -1,5 +1,7 @@
-const { showGeneralMenu } = require('./general');
-const { showAccountsMenu } = require('./accounts');
+const { config } = require('../../preload');
+
+const { showGeneral } = require('./general');
+const { showAccounts } = require('./accounts');
 
 const inquirer = require('inquirer');
 
@@ -13,7 +15,7 @@ const menu = async () => {
     const { action } = await inquirer.prompt({
         type: 'list',
         name: 'action',
-        message: 'Nebula Client | Menu',
+        message: `${config.getConfig('header')} | Menu`,
         choices: [
             'General',
             'Accounts',
@@ -25,10 +27,10 @@ const menu = async () => {
 
     switch (action) {
         case 'General':
-            showGeneralMenu(goBack);
+            showGeneral(goBack);
             break;
         case 'Accounts':
-            showAccountsMenu(goBack);
+            showAccounts(goBack);
             break;
     }
 };

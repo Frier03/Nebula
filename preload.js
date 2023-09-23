@@ -1,12 +1,12 @@
 // Load all accounts from account_configurations into Bot classes
-const { getAccounts } = require('./utils/csv');
-const Nebula = require('./Nebula');
+const config = require('./configReader');
 
+const Nebula = require('./Nebula');
 const nebula = new Nebula();
 
-module.exports = async () => {
-    console.log('Preload has started...');
-    console.log('(Preload) Getting configured accounts details..');
+const { getAccounts } = require('./utils/csv');
+
+const loadSavedAccounts = async () => {
     const accounts = await getAccounts();
 
     accounts.map((account) => {
@@ -17,7 +17,22 @@ module.exports = async () => {
             authenticationMethod: account.auth
         });
     });
+
+    nebula.workerIds = Object.keys(nebula.workers);
 };
 
-// Export the 'nebula' object for use in other files
+const loadSavedServers = async () => { nebula.serverHistory = config.getConfig('server_history').split(','); };
+
+const selectServer = async () => { nebula.serverAddress = config.getConfig('server_select'); };
+
+module.exports = async () => {
+    console.log('Prealoder running');
+
+    if (config.getConfig('load_saved_accounts') == true) await loadSavedAccounts();
+    if (config.getConfig('load_saved_servers') == true) await loadSavedServers();
+    if (config.getConfig('auto_server_select') == true) await selectServer();
+};
+
+// Export variables for other files
 module.exports.nebula = nebula;
+module.exports.config = config;
