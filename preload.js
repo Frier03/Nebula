@@ -17,6 +17,8 @@ const loadSavedAccounts = async () => {
             authenticationMethod: account.auth
         });
     });
+
+    nebula.workerIds = Object.keys(nebula.workers);
 };
 
 const loadSavedServers = async () => { nebula.serverHistory = config.getConfig('server_history').split(','); };
