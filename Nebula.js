@@ -65,7 +65,7 @@ class Nebula {
         const copyOfConnectedBots = [...this.connectedBots];
 
         for (let i = 0; i < copyOfConnectedBots.length; i++) {
-            const workerId = await this.getWorkerIdByUsername(copyOfConnectedBots[i]);
+            const workerId = await this.getIdByUsername(copyOfConnectedBots[i]);
             if (workerId == 'failed') {
                 console.log(`Something went wrong. Skipping ${copyOfConnectedBots[i]}...`);
             }
@@ -83,7 +83,7 @@ class Nebula {
         };
     };
 
-    async getWorkerIdByUsername(username) {
+    async getIdByUsername(username) {
         const bots = await this.getAllBotsData();
         for (let i = 0; i < bots.length; i++) {
             if (bots[i].username == username) {
