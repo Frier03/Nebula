@@ -8,7 +8,7 @@ const showAccounts = async (backFunction) => {
     const accounts = await nebula.getAllBotsData();
 
     const accountChoices = accounts.map(account => ({
-        name: `(${account.id}) ${account.email} | ${account.connected ? "Online" : "Offline"}`,
+        name: `(${account.id}) ${account.username == null ? account.email : account.username} | ${account.connected ? "Online" : "Offline"}`,
         value: account,
     }));
 

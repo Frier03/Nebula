@@ -11,7 +11,7 @@ module.exports = {
         // Load preload.js
         await loadPreload();
 
-        if (config.getConfig('open_in_new_terminal') == false) {
+        if (!config.getConfig('open_in_new_terminal')) {
             showMenu();
             return;
         }

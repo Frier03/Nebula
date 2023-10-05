@@ -11,7 +11,7 @@ const general = async (backFunction) => {
         choices: [
             `Server Address (${nebula.serverAddress})`,
             `Connect Message (${config.getConfig('connect_message')})`,
-            `Start`,
+            `${nebula.connectedBots.length > 0 ? 'Stop' : 'Start'}`,
             new inquirer.Separator(), // Add a separator line
             'Back',
         ]
@@ -20,6 +20,12 @@ const general = async (backFunction) => {
     switch (action) {
         case 'Start':
             await nebula.connectBots();
+
+            backFunction();
+            break;
+
+        case 'Stop':
+            await nebula.disconnectBots();
 
             backFunction();
             break;

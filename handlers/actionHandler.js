@@ -8,13 +8,21 @@ const Bot = require('../Bot');
  * @param {Bot} bot - The bot instance
  */
 module.exports = {
-    info: (bot) => {
-        const botInfo = bot.getAllVariables();
+    info: async (bot) => {
+        const botInfo = await bot.getAllVariables();
+
         return { action: 'infoConfirmation', desc: botInfo };
     },
 
     connect: async (bot) => {
         const success = await bot.connect();
+
         return { action: 'connectACK', status: success ? "ok" : "failed", username: bot.username };
     },
+
+    disconnect: async (bot) => {
+        const success = await bot.diconnect();
+
+        return { action: 'disconnectACK', status: success ? "ok" : "failed" };
+    }
 };

@@ -46,12 +46,52 @@ class Nebula {
             // Wait for connectACK before moving to the next iteration
             await waitForConnectACK(worker);
 
-            // delay if its not the last worker
-            if (i == this.workerIds.length - 1) break;
+            // delay
             await new Promise((resolve) => setTimeout(resolve, throttlingDelay));
         };
     };
 
+    async disconnectBots() {
+        const waitForDisconnectACK = (worker) => {
+            return new Promise((resolve) => {
+                worker.once('message', async (message) => {
+                    if (message.action == 'disconnectACK') {
+                        resolve();
+                    }
+                });
+            });
+        };
+
+        const copyOfConnectedBots = [...this.connectedBots];
+
+        for (let i = 0; i < copyOfConnectedBots.length; i++) {
+            const workerId = await this.getIdByUsername(copyOfConnectedBots[i]);
+            if (workerId == 'failed') {
+                console.log(`Something went wrong. Skipping ${copyOfConnectedBots[i]}...`);
+            }
+            const worker = this.workers[workerId];
+
+            // Trigger worker to disconnect
+            worker.postMessage({ action: 'disconnect' });
+
+            // Wait for disconnectACK before moving to the next iteration
+            await waitForDisconnectACK(worker);
+
+            this.connectedBots.splice(copyOfConnectedBots[i], 1);
+
+            await new Promise((resolve) => setTimeout(resolve, 500));
+        };
+    };
+
+    async getIdByUsername(username) {
+        const bots = await this.getAllBotsData();
+        for (let i = 0; i < bots.length; i++) {
+            if (bots[i].username == username) {
+                return bots[i].id;
+            }
+        };
+        return 'failed';
+    };
 
     createBot(credentials) {
         credentials.id = nanoid(getConfig('nanoid_length'));
@@ -62,9 +102,8 @@ class Nebula {
 
     async getAllBotsData() {
         const botData = [];
-        const workerIds = Object.keys(this.workers);
 
-        const dataPromises = workerIds.map((workerId) => {
+        const dataPromises = this.workerIds.map((workerId) => {
             return new Promise((resolve) => {
                 this.workers[workerId].postMessage({ action: 'info' });
                 this.workers[workerId].once('message', (message) => {
@@ -81,7 +120,6 @@ class Nebula {
 
         return botData;
     };
-
 };
 
 module.exports = Nebula;
