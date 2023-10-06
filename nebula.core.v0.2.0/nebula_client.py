@@ -5,7 +5,7 @@ from bot import MinecraftBot
 class NebulaClient:
     def __init__(self) -> None:
         self.bots: list(Thread) = []
-
+ 
     def add_bot(self):
         bot = MinecraftBot()
         self.bots.append(bot)
@@ -17,4 +17,4 @@ class NebulaClient:
 
 if __name__ == '__main__':
     nebula_client = NebulaClient()
-    #nebula_client.add_bot()
+    nebula_client.add_bot()
