@@ -12,9 +12,10 @@ class NebulaClient:
 
         self._initialize()
  
-    def add_bot(self):
-        bot = MinecraftBot()
+    def add_bot(self, credentials):
+        bot = MinecraftBot(credentials)
         self.bots.append(bot)
+        return bot
 
     def start(self):
         if not self._account_loader.path:
@@ -24,11 +25,13 @@ class NebulaClient:
         throttling_delay = int(self._config_manager.get_value('Settings', 'throttling_delay'))
         accounts_list = self._account_loader.load_accounts()
 
-        for index, account in enumerate(accounts_list):
+        for index, credentials in enumerate(accounts_list):
             if index >= max_iterator:
                 break
 
-            print(account)
+            bot = self.add_bot(credentials)
+            bot.connect()
+
             asyncio.sleep(throttling_delay)
 
     @property
@@ -44,5 +47,4 @@ class NebulaClient:
 
 if __name__ == '__main__':
     nebula_client = NebulaClient()
-    nebula_client.add_bot()
     nebula_client.start()

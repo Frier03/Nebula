@@ -25,22 +25,7 @@ class ConfigManager:
 
 # Usage
 if __name__ == "__main__":
-    config_manager = ConfigManager('configurations.conf')
+    config_manager = ConfigManager('nebula.core.v0.2.0/configurations.conf')
 
-    # Read values
-    username = config_manager.get_value('Settings', 'username')
-    password = config_manager.get_value('Settings', 'password')
-    server = config_manager.get_value('Settings', 'server')
-    port = config_manager.get_value('Settings', 'port')
-
-    print(f'Username: {username}')
-    print(f'Password: {password}')
-    print(f'Server: {server}')
-    print(f'Port: {port}')
-
-    # Update values
-    config_manager.set_value('Settings', 'username', 'new_username')
-    config_manager.set_value('Settings', 'password', 'new_password')
-
-    # Save the updated configuration
-    config_manager.save()
+    # Example
+    username = config_manager.get_value('Settings', 'max_accounts')

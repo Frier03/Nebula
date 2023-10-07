@@ -4,7 +4,7 @@ from enum import Enum
 import asyncio
 
 class MinecraftBot(threading.Thread):
-    class State(Enum):
+    class State(Enum): 
         idle = 0
         connecting = 1
         connected = 2
@@ -13,6 +13,7 @@ class MinecraftBot(threading.Thread):
         super().__init__()
         self.id = id(self)
         self.state = MinecraftBot.State.idle
+        self.credentials = kwargs.credentials
 
     async def connect(self) -> State:
         """Simulate a connection process"""
