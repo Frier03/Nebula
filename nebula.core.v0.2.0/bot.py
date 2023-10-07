@@ -14,8 +14,6 @@ class MinecraftBot(threading.Thread):
         self.id = id(self)
         self.state = MinecraftBot.State.idle
 
-        print(f"Minecraft Bot has been added!")
-
     async def connect(self) -> State:
         """Simulate a connection process"""
         print(f"Bot {self.id} is connecting...")
