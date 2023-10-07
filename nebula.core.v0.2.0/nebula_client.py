@@ -17,12 +17,12 @@ class NebulaClient:
         self.bots.append(bot)
 
     def start(self):
-        if not self.account_loader.accounts_list_path:
+        if not self._account_loader.path:
             return
 
         max_iterator = int(self._config_manager.get_value('Settings', 'max_accounts'))
         throttling_delay = int(self._config_manager.get_value('Settings', 'throttling_delay'))
-        accounts_list = self.account_loader.load_accounts()
+        accounts_list = self._account_loader.load_accounts()
 
         for index, account in enumerate(accounts_list):
             if index >= max_iterator:
