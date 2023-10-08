@@ -1,19 +1,19 @@
 from pathlib import Path
 
 class AccountLoader:
-    def __init__(self):
+    def __init__(self) -> None:
         self.path: Path = None
 
-    def set_accounts_path(self, path):
+    def set_accounts_path(self, path) -> bool:
         if not Path(path).exists() or not Path(path).is_file():
-            return 'Path does not exist or is not a file'
+            return False
         if not Path(path).suffix.lower() == '.txt':
-            return 'Invalid file extension, .txt expected'
+            return False
 
         self.path = Path(path)
-        return 'ok'
+        return True
         
-    def load_accounts(self):
+    def load_accounts(self) -> None:
         accounts = []
         with open(self.path, 'r') as file:
             for line in file:

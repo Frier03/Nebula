@@ -2,7 +2,7 @@ import threading
 from bot import MinecraftBot
 from scripts.configManager import ConfigManager
 from scripts.accountLoader import AccountLoader
-import asyncio
+import time
 
 class NebulaClient:
     def __init__(self) -> None:
@@ -11,11 +11,6 @@ class NebulaClient:
         self._account_loader: AccountLoader = None
 
         self._initialize()
- 
-    def add_bot(self, credentials):
-        bot = MinecraftBot(credentials)
-        self.bots.append(bot)
-        return bot
 
     def start(self):
         if not self._account_loader.path:
@@ -29,10 +24,11 @@ class NebulaClient:
             if index >= max_iterator:
                 break
 
-            bot = self.add_bot(credentials)
-            bot.connect()
+            bot = MinecraftBot()
+            self.bots.append(bot)
+            bot.connect(credentials)
 
-            asyncio.sleep(throttling_delay)
+            time.sleep(throttling_delay / 1000)
 
     @property
     def ConfigManager(self):
@@ -47,4 +43,5 @@ class NebulaClient:
 
 if __name__ == '__main__':
     nebula_client = NebulaClient()
+    nebula_client._account_loader.set_accounts_path('')
     nebula_client.start()
