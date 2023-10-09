@@ -16,10 +16,11 @@ class NebulaClient:
         if not self._account_loader.path:
             return
 
-        max_iterator = int(self._config_manager.get_value('Settings', 'max_accounts'))
-        throttling_delay = int(self._config_manager.get_value('Settings', 'throttling_delay'))
+        max_iterator = self._config_manager.get_value('Settings', 'max_accounts')
+        throttling_delay = self._config_manager.get_value('Settings', 'throttling_delay')
         host = self._config_manager.get_value('ServerConfiguration', 'host')
         port = self._config_manager.get_value('ServerConfiguration', 'port')
+        
         accounts_list = self._account_loader.load_accounts()
 
         for index, credentials in enumerate(accounts_list):
