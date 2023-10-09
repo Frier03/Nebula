@@ -13,14 +13,15 @@ class SeverityLevel(Enum):
 
     @classmethod
     def _find_severity_for(cls, severity):
-        # Search for the severity level by name and return its value
+        # Search for the severity level by name and return its value.
         for level in cls:
             if level.name == severity:
                 return level.value
 
 class Logger():
     """
-    Instances of the Logger class represent a single logging channel. Each minecraft bot has their own child logging channel. A loggers parent is referred to a minecraft bot."""
+    Instances of the Logger class represent a single logging channel. Each minecraft bot has their own child logging channel. A loggers parent is referred to a minecraft bot.
+    """
     def __init__(self, parent=None, severity_level=SeverityLevel.notset) -> None:
         self._formatter: Formatter = Formatter()
         self._file_handler: FileHandler = FileHandler()
@@ -42,7 +43,9 @@ class Logger():
             
 
     def _log(self, level: SeverityLevel, timestamp, msg):
-        """Low-level logging routine. Formats the log and creates a LogRecord."""
+        """
+        Low-level logging routine. Formats the log and creates a LogRecord.
+        """
 
         if self.disabled:
             return False
