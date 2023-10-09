@@ -2,6 +2,7 @@ import threading
 from bot import MinecraftBot
 from scripts.configManager import ConfigManager
 from scripts.accountLoader import AccountLoader
+from logging.logger import Logger
 import time
 
 class NebulaClient:
@@ -9,6 +10,7 @@ class NebulaClient:
         self.bots: list(threading.Thread) = []
         self._config_manager: ConfigManager = None
         self._account_loader: AccountLoader = None
+        self._logging: Logger = None
 
         self._initialize()
 
