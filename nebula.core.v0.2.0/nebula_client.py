@@ -18,6 +18,8 @@ class NebulaClient:
 
         max_iterator = int(self._config_manager.get_value('Settings', 'max_accounts'))
         throttling_delay = int(self._config_manager.get_value('Settings', 'throttling_delay'))
+        host = self._config_manager.get_value('ServerConfiguration', 'host')
+        port = self._config_manager.get_value('ServerConfiguration', 'port')
         accounts_list = self._account_loader.load_accounts()
 
         for index, credentials in enumerate(accounts_list):
@@ -25,7 +27,7 @@ class NebulaClient:
                 break
 
             bot = MinecraftBot()
-            state = bot.connect(credentials)
+            state = bot.connect(credentials, (host, port))
             self.bots.append(bot) if state == MinecraftBot.State.connected else 0
 
             time.sleep(throttling_delay / 1000)
@@ -43,5 +45,5 @@ class NebulaClient:
 
 if __name__ == '__main__':
     nebula_client = NebulaClient()
-    nebula_client._account_loader.set_accounts_path('')
+    nebula_client._account_loader.set_accounts_path('/Users/petfri/Documents/GitHub/Nebula/accounts.txt')
     nebula_client.start()
