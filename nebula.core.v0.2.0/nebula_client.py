@@ -25,8 +25,8 @@ class NebulaClient:
                 break
 
             bot = MinecraftBot()
-            self.bots.append(bot)
-            bot.connect(credentials)
+            state = bot.connect(credentials)
+            self.bots.append(bot) if state == MinecraftBot.State.connected else 0
 
             time.sleep(throttling_delay / 1000)
 
