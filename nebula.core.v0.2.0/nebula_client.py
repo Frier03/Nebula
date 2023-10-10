@@ -2,7 +2,7 @@ import threading
 from bot import MinecraftBot
 from scripts.configManager import ConfigManager
 from scripts.accountLoader import AccountLoader
-from logging.logger import Logger
+from logging import Logger
 import time
 
 class NebulaClient:
@@ -22,6 +22,7 @@ class NebulaClient:
         throttling_delay = int(self._config_manager.get_value('Settings', 'throttling_delay'))
         host = self._config_manager.get_value('ServerConfiguration', 'host')
         port = self._config_manager.get_value('ServerConfiguration', 'port')
+        version = self._config_manager.get_value('ServerConfiguration', 'version')
 
         accounts_list = self._account_loader.load_accounts()
 
@@ -30,7 +31,8 @@ class NebulaClient:
                 break
 
             bot = MinecraftBot()
-            state = bot.connect(credentials, (host, port))
+            state = bot.connect(credentials, (host, port, version))
+
             self.bots.append(bot) if state == MinecraftBot.State.connected else 0
 
             time.sleep(throttling_delay / 1000)

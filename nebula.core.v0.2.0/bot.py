@@ -6,6 +6,7 @@ import time
 from javascript import require, On
 mineflayer = require('mineflayer')
 
+#imageUrl = f"https://mc-heads.net/avatar/{self.entity.username}/600.png"
 class MinecraftBot(threading.Thread):
     class State(Enum): 
         idle = 0
@@ -22,12 +23,11 @@ class MinecraftBot(threading.Thread):
 
     def run(self):
         while True:
-            print(f"Bot {self.id} - {self.state.name}")
             time.sleep(5)
 
     def connect(self, credentials, serverAddress):
         """Connection process"""
-        print(f"Bot {self.id} is connecting...")
+        #print(f"Bot {self.id} is connecting...")
 
         # Set state "connecting" until the bot has connected
         self.state = MinecraftBot.State.connecting
@@ -35,25 +35,23 @@ class MinecraftBot(threading.Thread):
         self.entity = mineflayer.createBot({ 
             'host': serverAddress[0],
             'port': serverAddress[1],
+            'version': serverAddress[2],
             'username': credentials.get('email'),
             'password': credentials.get('password'),
             'auth': credentials.get('auth'),
             'hideErrors': True,
-            'logErrors': False
+            'logErrors': False,
         })
         
         @On(self.entity, 'error')
-        def onError(this, err):
-            if err.details == None: return
-
+        def on_error(this, err):
             self.state = MinecraftBot.State.failed_to_connect
-            print(err.details.reason)
 
-        @On(self.entity, 'spawn')
-        def onSpawn(this):
+        @On(self.entity, 'login')
+        def on_login(this):
             self.state = MinecraftBot.State.connected
-            #self.imageUrl = f"https://mc-heads.net/avatar/{self.entity.username}/600.png"
 
+            print(self.entity.username + " has logged in!")
             self.start()
         
         while self.state == MinecraftBot.State.connecting:
